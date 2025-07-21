@@ -1,0 +1,27 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: demo-app-vsvc
+spec:
+  gateways:
+  - demo-app-gateway
+  hosts:
+  - "demo-app.127.0.0.1.nip.io"    # nip.io allows you to map any IP Address to a hostname. Here demo-app.127.0.0.1.nip.io maps to 127.0.0.1/localhost
+  http:
+  - name: canary-users
+    match:
+    - headers:
+        x-canary-user:
+          exact: "true"
+    route:
+    - destination:
+        host: demo-app-service-canary
+      weight: 100
+  - name: primary
+    route:
+    - destination:
+        host: demo-app-service-stable
+      weight: 100                     # Argo Rollouts modifies this
+    - destination:
+        host: demo-app-service-canary
+      weight: 0                       # Argo Rollouts modifies this

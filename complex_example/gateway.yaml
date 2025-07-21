@@ -1,0 +1,14 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: demo-app-gateway
+spec:
+  selector:
+    istio: ingressgateway # use istio default controller
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - "demo-app.127.0.0.1.nip.io"   # nip.io allows you to map any IP Address to a hostname. Here demo-app.127.0.0.1.nip.io maps to 127.0.0.1/localhost
