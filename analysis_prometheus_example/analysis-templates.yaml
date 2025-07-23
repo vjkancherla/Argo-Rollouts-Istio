@@ -1,0 +1,207 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AnalysisTemplate
+metadata:
+  name: success-rate
+spec:
+  args:
+  - name: service-name
+  - name: namespace
+    value: my-demo  # Default namespace, can be overridden
+  metrics:
+  - name: success-rate
+    interval: 10s  # Reduced from 5m for faster feedback
+    count: 5      # Number of measurements to take
+    # NOTE: prometheus queries return results in the form of a vector.
+    # So it is common to access the index 0 of the returned array to obtain the value
+    successCondition: result[0] >= 0.95
+    failureLimit: 3
+    provider:
+      prometheus:
+        address: http://dev-prometheus-kube-promet-prometheus.monitoring.svc.cluster.local:9090  # Updated for kube-prometheus-stack
+        # timeout is expressed in seconds
+        timeout: 40
+        query: |
+          (
+            sum(irate(
+              istio_requests_total{
+                reporter="destination",
+                destination_service_name="{{args.service-name}}",
+                destination_service_namespace="{{args.namespace}}",
+                response_code!~"5.*"
+              }[5m]
+            )) 
+            /
+            sum(irate(
+              istio_requests_total{
+                reporter="destination",
+                destination_service_name="{{args.service-name}}",
+                destination_service_namespace="{{args.namespace}}"
+              }[5m]
+            ))
+          ) or on() vector(1)
+
+---
+
+apiVersion: argoproj.io/v1alpha1
+kind: AnalysisTemplate
+metadata:
+  name: error-rate
+spec:
+  args:
+  - name: service-name
+  - name: namespace
+    value: my-demo  # Default namespace, can be overridden
+  metrics:
+  - name: error-rate
+    interval: 30s  # Measurement interval
+    count: 10      # Number of measurements to take
+    # NOTE: prometheus queries return results in the form of a vector.
+    # So it is common to access the index 0 of the returned array to obtain the value
+    successCondition: result[0] <= 0.05  # Error rate should be <= 5%
+    failureLimit: 3  # Fail after 3 consecutive failures
+    provider:
+      prometheus:
+        address: http://dev-prometheus-kube-promet-prometheus.monitoring.svc.cluster.local:9090
+        timeout: 40
+        query: |
+          (
+            sum(irate(
+              istio_requests_total{
+                reporter="destination",
+                destination_service_name="{{args.service-name}}",
+                destination_service_namespace="{{args.namespace}}",
+                response_code=~"5.*"
+              }[5m]
+            )) 
+            /
+            sum(irate(
+              istio_requests_total{
+                reporter="destination",
+                destination_service_name="{{args.service-name}}",
+                destination_service_namespace="{{args.namespace}}"
+              }[5m]
+            ))
+          ) or on() vector(0)
+
+---
+# Alternative: More comprehensive error rate (4xx + 5xx errors)
+apiVersion: argoproj.io/v1alpha1
+kind: AnalysisTemplate
+metadata:
+  name: comprehensive-error-rate
+spec:
+  args:
+  - name: service-name
+  - name: namespace
+    value: my-demo
+  metrics:
+  - name: comprehensive-error-rate
+    interval: 30s
+    count: 10
+    successCondition: result[0] <= 0.10  # Total error rate should be <= 10%
+    failureLimit: 3
+    provider:
+      prometheus:
+        address: http://dev-prometheus-kube-promet-prometheus.monitoring.svc.cluster.local:9090
+        timeout: 40
+        query: |
+          (
+            sum(irate(
+              istio_requests_total{
+                reporter="destination",
+                destination_service_name="{{args.service-name}}",
+                destination_service_namespace="{{args.namespace}}",
+                response_code=~"[45].*"
+              }[5m]
+            )) 
+            /
+            sum(irate(
+              istio_requests_total{
+                reporter="destination",
+                destination_service_name="{{args.service-name}}",
+                destination_service_namespace="{{args.namespace}}"
+              }[5m]
+            ))
+          ) or on() vector(0)
+
+---
+# Separate 4xx and 5xx error rate templates
+apiVersion: argoproj.io/v1alpha1
+kind: AnalysisTemplate
+metadata:
+  name: client-error-rate
+spec:
+  args:
+  - name: service-name
+  - name: namespace
+    value: my-demo
+  metrics:
+  - name: client-error-rate
+    interval: 30s
+    count: 10
+    successCondition: result[0] <= 0.15  # 4xx errors should be <= 15%
+    failureLimit: 5  # More tolerance for client errors
+    provider:
+      prometheus:
+        address: http://dev-prometheus-kube-promet-prometheus.monitoring.svc.cluster.local:9090
+        timeout: 40
+        query: |
+          (
+            sum(irate(
+              istio_requests_total{
+                reporter="destination",
+                destination_service_name="{{args.service-name}}",
+                destination_service_namespace="{{args.namespace}}",
+                response_code=~"4.*"
+              }[5m]
+            )) 
+            /
+            sum(irate(
+              istio_requests_total{
+                reporter="destination",
+                destination_service_name="{{args.service-name}}",
+                destination_service_namespace="{{args.namespace}}"
+              }[5m]
+            ))
+          ) or on() vector(0)
+
+---
+# Server error rate (5xx only) - most critical
+apiVersion: argoproj.io/v1alpha1
+kind: AnalysisTemplate
+metadata:
+  name: server-error-rate
+spec:
+  args:
+  - name: service-name
+  - name: namespace
+    value: my-demo
+  metrics:
+  - name: server-error-rate
+    interval: 30s
+    count: 10
+    successCondition: result[0] <= 0.01  # Server errors should be <= 1%
+    failureLimit: 2  # Very strict - fail after 2 consecutive failures
+    provider:
+      prometheus:
+        address: http://dev-prometheus-kube-promet-prometheus.monitoring.svc.cluster.local:9090
+        timeout: 40
+        query: |
+          (
+            sum(irate(
+              istio_requests_total{
+                reporter="destination",
+                destination_service_name="{{args.service-name}}",
+                destination_service_namespace="{{args.namespace}}",
+                response_code=~"5.*"
+              }[5m]
+            )) 
+            /
+            sum(irate(
+              istio_requests_total{
+                reporter="destination",
+                destination_service_name="{{args.service-name}}",
+                destination_service_namespace="{{args.namespace}}"
+              }[5m]
+            ))
+          ) or on() vector(0)

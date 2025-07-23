@@ -1,0 +1,26 @@
+======================================
+GRAFANA
+======================================
+>> helm repo add grafana https://grafana.github.io/helm-charts
+
+>> helm search repo grafana/grafana --versions -l | more
+
+>> helm install dev-grafana \
+grafana/grafana \
+--version 9.0.0 \
+--namespace monitoring \
+--create-namespace \
+-f grafana-values.yml
+
+Get token
+>> kubectl get secret --namespace monitoring dev-grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
+
+>> k port-forward -n monitoring svc/dev-grafana 3000:80
+
+Login using admin/token
+
+Use this link to search for logs in Loki:
+https://grafana.com/blog/2023/04/12/how-to-collect-and-query-kubernetes-logs-with-grafana-loki-grafana-and-grafana-agent/
+
+Load kubernetes dashboard
+    - Go to Dashboards > General > Cluster Monitoring for Kubernetes

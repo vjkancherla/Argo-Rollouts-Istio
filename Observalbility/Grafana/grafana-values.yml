@@ -1,0 +1,45 @@
+datasources:
+  datasources.yaml:
+    apiVersion: 1
+    datasources:
+    - name: dev-prometheus
+      type: prometheus
+      #The dev-prometheus-kube-prometh-prometheus SVC's ClusterIP:port
+      url: http://dev-prometheus-kube-promet-prometheus.monitoring.svc.cluster.local:9090
+      access: proxy
+      isDefault: true
+    - name: My-Loki
+      type: loki
+      #The service/my-loki SVC's ClusterIP:port
+      url: http://my-loki.monitoring.svc.cluster.local:3100
+      access: proxy
+dashboardProviders:
+  dashboardproviders.yaml:
+    apiVersion: 1
+    providers:
+    - name: 'default'
+      orgId: 1
+      folder: ''
+      type: file
+      disableDeletion: false
+      editable: true
+      options:
+        path: /var/lib/grafana/dashboards/default
+dashboards:
+  default:
+    kubernetes:
+      gnetId: 10000
+      revision: 1
+      datasource: dev-prometheus
+    prometheus:
+      gnetId: 3662
+      revision: 1
+      datasource: dev-prometheus
+persistence:
+  size: 100Mi
+serviceMonitor:
+  enabled: true
+  #We need to add a label to the ServiceMonitor K8s Object.
+  #Go to 51:29 minutes in https://www.youtube.com/watch?v=6xmWr7p5TE0
+  labels:
+    release: dev-prometheus

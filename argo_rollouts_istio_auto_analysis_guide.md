@@ -43,21 +43,21 @@ k label namespace my-demo istio-injection=enabled
 
 ```bash
 # services.yaml
-k apply -n my-demo -f complex_example/services.yaml
+k apply -n my-demo -f analysis_example/services.yaml
 ```
 
 ### Istio Gateway
 
 ```bash
 # gateway.yaml
-k apply -n my-demo -f complex_example/gateway.yaml
+k apply -n my-demo -f analysis_example/gateway.yaml
 ```
 
 ### Istio VirtualService with Header Routing for Canary Testing
 
 ```bash
 # virtualsvc.yaml
-k apply -n my-demo -f complex_example/virtualsvc.yaml
+k apply -n my-demo -f analysis_example/virtualsvc.yaml
 ```
 
 ### Analysis Templates for Automated Safety
@@ -70,14 +70,18 @@ k apply -n my-demo -f complex_example/virtualsvc.yaml
 # AnalysisRun is complete. A failure/error of the analysis will cause the rollout's update to
 # abort, and set the canary weight to zero.
 
-k apply -n my-demo -f complex_example/analysis-templates.yaml
+# DEMO TEMPLATES (for testing):
+# - always-pass: Simple job-based template that always succeeds
+# - random-fail: Job-based template with 50% failure rate for testing rollback
+
+k apply -n my-demo -f analysis_example/analysis-templates.yaml
 ```
 
 ### Application Rollout
 
 ```bash
 # rollout.yaml
-k apply -n my-demo -f complex_example/rollout.yaml
+k apply -n my-demo -f analysis_example/rollout.yaml
 ```
 
 ### Verify external access to the Application, via the Istio-Ingress-Gateway
@@ -138,9 +142,22 @@ NAME                                  KIND        STATUS     AGE    INFO
 k apply -n my-demo -f example/rollout-update.yaml
 ```
 
-### Verify the application in separate terminals
+### Continuously Monitor and verify the application in separate terminals
 Run these in separate terminals:
 ```bash 
+# Monitor and log the rollout status every 10 seconds
+while true; do
+    {
+        kubectl argo rollouts -n my-demo get rollout demo-app
+        echo "---"
+        date
+    } >> rollout.log
+    sleep 10
+done
+
+# Tail the rollout log
+tail -f rollout.log
+
 # Round-robin to all pods. Based on the current Traffic weights, ISTIO will send requests to the stable/canary service correspondingly
 while true; do curl http://demo-app.127.0.0.1.nip.io:8080 ; sleep 5; done
 

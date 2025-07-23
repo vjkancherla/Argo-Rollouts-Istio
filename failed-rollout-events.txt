@@ -1,0 +1,962 @@
+--
+Tue 22 Jul 2025 15:00:05 BST
+--
+Name:            demo-app
+Namespace:       my-demo
+Status:          ॥ Paused
+Message:         CanaryPauseStep
+Strategy:        Canary
+  Step:          1/11
+  SetWeight:     10
+  ActualWeight:  10
+Images:          nginx:1.20 (canary, stable)
+Replicas:
+  Desired:       5
+  Current:       6
+  Updated:       1
+  Ready:         6
+  Available:     6
+
+NAME                                  KIND        STATUS     AGE  INFO
+⟳ demo-app                            Rollout     ॥ Paused   11m
+├──# revision:2
+│  └──⧉ demo-app-6b8478797            ReplicaSet  ✔ Healthy  33s  canary
+│     └──□ demo-app-6b8478797-4n2hp   Pod         ✔ Running  32s  ready:2/2
+└──# revision:1
+   └──⧉ demo-app-788d74444d           ReplicaSet  ✔ Healthy  11m  stable
+      ├──□ demo-app-788d74444d-ztlqp  Pod         ✔ Running  11m  ready:2/2
+      ├──□ demo-app-788d74444d-8nhld  Pod         ✔ Running  11m  ready:2/2
+      ├──□ demo-app-788d74444d-bsmxg  Pod         ✔ Running  11m  ready:2/2
+      ├──□ demo-app-788d74444d-djln8  Pod         ✔ Running  11m  ready:2/2
+      └──□ demo-app-788d74444d-mcn8c  Pod         ✔ Running  11m  ready:2/2
+--
+Tue 22 Jul 2025 15:00:15 BST
+--
+Name:            demo-app
+Namespace:       my-demo
+Status:          ॥ Paused
+Message:         CanaryPauseStep
+Strategy:        Canary
+  Step:          1/11
+  SetWeight:     10
+  ActualWeight:  10
+Images:          nginx:1.20 (canary, stable)
+Replicas:
+  Desired:       5
+  Current:       6
+  Updated:       1
+  Ready:         6
+  Available:     6
+
+NAME                                  KIND        STATUS     AGE  INFO
+⟳ demo-app                            Rollout     ॥ Paused   11m
+├──# revision:2
+│  └──⧉ demo-app-6b8478797            ReplicaSet  ✔ Healthy  43s  canary
+│     └──□ demo-app-6b8478797-4n2hp   Pod         ✔ Running  42s  ready:2/2
+└──# revision:1
+   └──⧉ demo-app-788d74444d           ReplicaSet  ✔ Healthy  11m  stable
+      ├──□ demo-app-788d74444d-ztlqp  Pod         ✔ Running  11m  ready:2/2
+      ├──□ demo-app-788d74444d-8nhld  Pod         ✔ Running  11m  ready:2/2
+      ├──□ demo-app-788d74444d-bsmxg  Pod         ✔ Running  11m  ready:2/2
+      ├──□ demo-app-788d74444d-djln8  Pod         ✔ Running  11m  ready:2/2
+      └──□ demo-app-788d74444d-mcn8c  Pod         ✔ Running  11m  ready:2/2
+--
+Tue 22 Jul 2025 15:00:25 BST
+--
+Name:            demo-app
+Namespace:       my-demo
+Status:          ॥ Paused
+Message:         CanaryPauseStep
+Strategy:        Canary
+  Step:          1/11
+  SetWeight:     10
+  ActualWeight:  10
+Images:          nginx:1.20 (canary, stable)
+Replicas:
+  Desired:       5
+  Current:       6
+  Updated:       1
+  Ready:         6
+  Available:     6
+
+NAME                                  KIND        STATUS     AGE  INFO
+⟳ demo-app                            Rollout     ॥ Paused   11m
+├──# revision:2
+│  └──⧉ demo-app-6b8478797            ReplicaSet  ✔ Healthy  54s  canary
+│     └──□ demo-app-6b8478797-4n2hp   Pod         ✔ Running  53s  ready:2/2
+└──# revision:1
+   └──⧉ demo-app-788d74444d           ReplicaSet  ✔ Healthy  11m  stable
+      ├──□ demo-app-788d74444d-ztlqp  Pod         ✔ Running  11m  ready:2/2
+      ├──□ demo-app-788d74444d-8nhld  Pod         ✔ Running  11m  ready:2/2
+      ├──□ demo-app-788d74444d-bsmxg  Pod         ✔ Running  11m  ready:2/2
+      ├──□ demo-app-788d74444d-djln8  Pod         ✔ Running  11m  ready:2/2
+      └──□ demo-app-788d74444d-mcn8c  Pod         ✔ Running  11m  ready:2/2
+--
+Tue 22 Jul 2025 15:00:36 BST
+--
+Name:            demo-app
+Namespace:       my-demo
+Status:          ॥ Paused
+Message:         CanaryPauseStep
+Strategy:        Canary
+  Step:          1/11
+  SetWeight:     10
+  ActualWeight:  10
+Images:          nginx:1.20 (canary, stable)
+Replicas:
+  Desired:       5
+  Current:       6
+  Updated:       1
+  Ready:         6
+  Available:     6
+
+NAME                                  KIND        STATUS     AGE  INFO
+⟳ demo-app                            Rollout     ॥ Paused   12m
+├──# revision:2
+│  └──⧉ demo-app-6b8478797            ReplicaSet  ✔ Healthy  64s  canary
+│     └──□ demo-app-6b8478797-4n2hp   Pod         ✔ Running  63s  ready:2/2
+└──# revision:1
+   └──⧉ demo-app-788d74444d           ReplicaSet  ✔ Healthy  12m  stable
+      ├──□ demo-app-788d74444d-ztlqp  Pod         ✔ Running  12m  ready:2/2
+      ├──□ demo-app-788d74444d-8nhld  Pod         ✔ Running  12m  ready:2/2
+      ├──□ demo-app-788d74444d-bsmxg  Pod         ✔ Running  12m  ready:2/2
+      ├──□ demo-app-788d74444d-djln8  Pod         ✔ Running  12m  ready:2/2
+      └──□ demo-app-788d74444d-mcn8c  Pod         ✔ Running  12m  ready:2/2
+--
+Tue 22 Jul 2025 15:00:46 BST
+--
+Name:            demo-app
+Namespace:       my-demo
+Status:          ॥ Paused
+Message:         CanaryPauseStep
+Strategy:        Canary
+  Step:          1/11
+  SetWeight:     10
+  ActualWeight:  10
+Images:          nginx:1.20 (canary, stable)
+Replicas:
+  Desired:       5
+  Current:       6
+  Updated:       1
+  Ready:         6
+  Available:     6
+
+NAME                                  KIND        STATUS     AGE  INFO
+⟳ demo-app                            Rollout     ॥ Paused   12m
+├──# revision:2
+│  └──⧉ demo-app-6b8478797            ReplicaSet  ✔ Healthy  74s  canary
+│     └──□ demo-app-6b8478797-4n2hp   Pod         ✔ Running  73s  ready:2/2
+└──# revision:1
+   └──⧉ demo-app-788d74444d           ReplicaSet  ✔ Healthy  12m  stable
+      ├──□ demo-app-788d74444d-ztlqp  Pod         ✔ Running  12m  ready:2/2
+      ├──□ demo-app-788d74444d-8nhld  Pod         ✔ Running  12m  ready:2/2
+      ├──□ demo-app-788d74444d-bsmxg  Pod         ✔ Running  12m  ready:2/2
+      ├──□ demo-app-788d74444d-djln8  Pod         ✔ Running  12m  ready:2/2
+      └──□ demo-app-788d74444d-mcn8c  Pod         ✔ Running  12m  ready:2/2
+--
+Tue 22 Jul 2025 15:00:56 BST
+--
+Name:            demo-app
+Namespace:       my-demo
+Status:          ॥ Paused
+Message:         CanaryPauseStep
+Strategy:        Canary
+  Step:          1/11
+  SetWeight:     10
+  ActualWeight:  10
+Images:          nginx:1.20 (canary, stable)
+Replicas:
+  Desired:       5
+  Current:       6
+  Updated:       1
+  Ready:         6
+  Available:     6
+
+NAME                                  KIND        STATUS     AGE  INFO
+⟳ demo-app                            Rollout     ॥ Paused   12m
+├──# revision:2
+│  └──⧉ demo-app-6b8478797            ReplicaSet  ✔ Healthy  85s  canary
+│     └──□ demo-app-6b8478797-4n2hp   Pod         ✔ Running  84s  ready:2/2
+└──# revision:1
+   └──⧉ demo-app-788d74444d           ReplicaSet  ✔ Healthy  12m  stable
+      ├──□ demo-app-788d74444d-ztlqp  Pod         ✔ Running  12m  ready:2/2
+      ├──□ demo-app-788d74444d-8nhld  Pod         ✔ Running  12m  ready:2/2
+      ├──□ demo-app-788d74444d-bsmxg  Pod         ✔ Running  12m  ready:2/2
+      ├──□ demo-app-788d74444d-djln8  Pod         ✔ Running  12m  ready:2/2
+      └──□ demo-app-788d74444d-mcn8c  Pod         ✔ Running  12m  ready:2/2
+--
+Tue 22 Jul 2025 15:01:07 BST
+--
+Name:            demo-app
+Namespace:       my-demo
+Status:          ॥ Paused
+Message:         CanaryPauseStep
+Strategy:        Canary
+  Step:          1/11
+  SetWeight:     10
+  ActualWeight:  10
+Images:          nginx:1.20 (canary, stable)
+Replicas:
+  Desired:       5
+  Current:       6
+  Updated:       1
+  Ready:         6
+  Available:     6
+
+NAME                                  KIND        STATUS     AGE  INFO
+⟳ demo-app                            Rollout     ॥ Paused   12m
+├──# revision:2
+│  └──⧉ demo-app-6b8478797            ReplicaSet  ✔ Healthy  95s  canary
+│     └──□ demo-app-6b8478797-4n2hp   Pod         ✔ Running  94s  ready:2/2
+└──# revision:1
+   └──⧉ demo-app-788d74444d           ReplicaSet  ✔ Healthy  12m  stable
+      ├──□ demo-app-788d74444d-ztlqp  Pod         ✔ Running  12m  ready:2/2
+      ├──□ demo-app-788d74444d-8nhld  Pod         ✔ Running  12m  ready:2/2
+      ├──□ demo-app-788d74444d-bsmxg  Pod         ✔ Running  12m  ready:2/2
+      ├──□ demo-app-788d74444d-djln8  Pod         ✔ Running  12m  ready:2/2
+      └──□ demo-app-788d74444d-mcn8c  Pod         ✔ Running  12m  ready:2/2
+--
+Tue 22 Jul 2025 15:01:17 BST
+--
+Name:            demo-app
+Namespace:       my-demo
+Status:          ॥ Paused
+Message:         CanaryPauseStep
+Strategy:        Canary
+  Step:          1/11
+  SetWeight:     10
+  ActualWeight:  10
+Images:          nginx:1.20 (canary, stable)
+Replicas:
+  Desired:       5
+  Current:       6
+  Updated:       1
+  Ready:         6
+  Available:     6
+
+NAME                                  KIND        STATUS     AGE   INFO
+⟳ demo-app                            Rollout     ॥ Paused   12m
+├──# revision:2
+│  └──⧉ demo-app-6b8478797            ReplicaSet  ✔ Healthy  105s  canary
+│     └──□ demo-app-6b8478797-4n2hp   Pod         ✔ Running  104s  ready:2/2
+└──# revision:1
+   └──⧉ demo-app-788d74444d           ReplicaSet  ✔ Healthy  12m   stable
+      ├──□ demo-app-788d74444d-ztlqp  Pod         ✔ Running  12m   ready:2/2
+      ├──□ demo-app-788d74444d-8nhld  Pod         ✔ Running  12m   ready:2/2
+      ├──□ demo-app-788d74444d-bsmxg  Pod         ✔ Running  12m   ready:2/2
+      ├──□ demo-app-788d74444d-djln8  Pod         ✔ Running  12m   ready:2/2
+      └──□ demo-app-788d74444d-mcn8c  Pod         ✔ Running  12m   ready:2/2
+--
+Tue 22 Jul 2025 15:01:27 BST
+--
+Name:            demo-app
+Namespace:       my-demo
+Status:          ॥ Paused
+Message:         CanaryPauseStep
+Strategy:        Canary
+  Step:          1/11
+  SetWeight:     10
+  ActualWeight:  10
+Images:          nginx:1.20 (canary, stable)
+Replicas:
+  Desired:       5
+  Current:       6
+  Updated:       1
+  Ready:         6
+  Available:     6
+
+NAME                                  KIND        STATUS     AGE   INFO
+⟳ demo-app                            Rollout     ॥ Paused   13m
+├──# revision:2
+│  └──⧉ demo-app-6b8478797            ReplicaSet  ✔ Healthy  116s  canary
+│     └──□ demo-app-6b8478797-4n2hp   Pod         ✔ Running  115s  ready:2/2
+└──# revision:1
+   └──⧉ demo-app-788d74444d           ReplicaSet  ✔ Healthy  13m   stable
+      ├──□ demo-app-788d74444d-ztlqp  Pod         ✔ Running  13m   ready:2/2
+      ├──□ demo-app-788d74444d-8nhld  Pod         ✔ Running  12m   ready:2/2
+      ├──□ demo-app-788d74444d-bsmxg  Pod         ✔ Running  12m   ready:2/2
+      ├──□ demo-app-788d74444d-djln8  Pod         ✔ Running  12m   ready:2/2
+      └──□ demo-app-788d74444d-mcn8c  Pod         ✔ Running  12m   ready:2/2
+--
+Tue 22 Jul 2025 15:01:38 BST
+--
+Name:            demo-app
+Namespace:       my-demo
+Status:          ॥ Paused
+Message:         CanaryPauseStep
+Strategy:        Canary
+  Step:          1/11
+  SetWeight:     10
+  ActualWeight:  10
+Images:          nginx:1.20 (canary, stable)
+Replicas:
+  Desired:       5
+  Current:       6
+  Updated:       1
+  Ready:         6
+  Available:     6
+
+NAME                                  KIND        STATUS     AGE   INFO
+⟳ demo-app                            Rollout     ॥ Paused   13m
+├──# revision:2
+│  └──⧉ demo-app-6b8478797            ReplicaSet  ✔ Healthy  2m6s  canary
+│     └──□ demo-app-6b8478797-4n2hp   Pod         ✔ Running  2m5s  ready:2/2
+└──# revision:1
+   └──⧉ demo-app-788d74444d           ReplicaSet  ✔ Healthy  13m   stable
+      ├──□ demo-app-788d74444d-ztlqp  Pod         ✔ Running  13m   ready:2/2
+      ├──□ demo-app-788d74444d-8nhld  Pod         ✔ Running  13m   ready:2/2
+      ├──□ demo-app-788d74444d-bsmxg  Pod         ✔ Running  13m   ready:2/2
+      ├──□ demo-app-788d74444d-djln8  Pod         ✔ Running  13m   ready:2/2
+      └──□ demo-app-788d74444d-mcn8c  Pod         ✔ Running  13m   ready:2/2
+--
+Tue 22 Jul 2025 15:01:48 BST
+--
+Name:            demo-app
+Namespace:       my-demo
+Status:          ◌ Progressing
+Message:         more replicas need to be updated
+Strategy:        Canary
+  Step:          2/11
+  SetWeight:     25
+  ActualWeight:  10
+Images:          nginx:1.20 (canary, stable)
+Replicas:
+  Desired:       5
+  Current:       7
+  Updated:       2
+  Ready:         6
+  Available:     6
+
+NAME                                  KIND         STATUS             AGE    INFO
+⟳ demo-app                            Rollout      ◌ Progressing      13m
+├──# revision:2
+│  ├──⧉ demo-app-6b8478797            ReplicaSet   ◌ Progressing      2m16s  canary
+│  │  ├──□ demo-app-6b8478797-4n2hp   Pod          ✔ Running          2m15s  ready:2/2
+│  │  └──□ demo-app-6b8478797-d4wnb   Pod            PodInitializing  4s     ready:0/2
+│  └──α demo-app-6b8478797-2          AnalysisRun  ◌ Running          4s     ⚠ 2
+└──# revision:1
+   └──⧉ demo-app-788d74444d           ReplicaSet   ✔ Healthy          13m    stable
+      ├──□ demo-app-788d74444d-ztlqp  Pod          ✔ Running          13m    ready:2/2
+      ├──□ demo-app-788d74444d-8nhld  Pod          ✔ Running          13m    ready:2/2
+      ├──□ demo-app-788d74444d-bsmxg  Pod          ✔ Running          13m    ready:2/2
+      ├──□ demo-app-788d74444d-djln8  Pod          ✔ Running          13m    ready:2/2
+      └──□ demo-app-788d74444d-mcn8c  Pod          ✔ Running          13m    ready:2/2
+--
+Tue 22 Jul 2025 15:01:58 BST
+--
+Name:            demo-app
+Namespace:       my-demo
+Status:          ॥ Paused
+Message:         CanaryPauseStep
+Strategy:        Canary
+  Step:          3/11
+  SetWeight:     25
+  ActualWeight:  25
+Images:          nginx:1.20 (canary, stable)
+Replicas:
+  Desired:       5
+  Current:       7
+  Updated:       2
+  Ready:         7
+  Available:     7
+
+NAME                                  KIND         STATUS     AGE    INFO
+⟳ demo-app                            Rollout      ॥ Paused   13m
+├──# revision:2
+│  ├──⧉ demo-app-6b8478797            ReplicaSet   ✔ Healthy  2m27s  canary
+│  │  ├──□ demo-app-6b8478797-4n2hp   Pod          ✔ Running  2m26s  ready:2/2
+│  │  └──□ demo-app-6b8478797-d4wnb   Pod          ✔ Running  15s    ready:2/2
+│  └──α demo-app-6b8478797-2          AnalysisRun  ◌ Running  15s    ⚠ 4
+└──# revision:1
+   └──⧉ demo-app-788d74444d           ReplicaSet   ✔ Healthy  13m    stable
+      ├──□ demo-app-788d74444d-ztlqp  Pod          ✔ Running  13m    ready:2/2
+      ├──□ demo-app-788d74444d-8nhld  Pod          ✔ Running  13m    ready:2/2
+      ├──□ demo-app-788d74444d-bsmxg  Pod          ✔ Running  13m    ready:2/2
+      ├──□ demo-app-788d74444d-djln8  Pod          ✔ Running  13m    ready:2/2
+      └──□ demo-app-788d74444d-mcn8c  Pod          ✔ Running  13m    ready:2/2
+--
+Tue 22 Jul 2025 15:02:09 BST
+--
+Name:            demo-app
+Namespace:       my-demo
+Status:          ॥ Paused
+Message:         CanaryPauseStep
+Strategy:        Canary
+  Step:          3/11
+  SetWeight:     25
+  ActualWeight:  25
+Images:          nginx:1.20 (canary, stable)
+Replicas:
+  Desired:       5
+  Current:       7
+  Updated:       2
+  Ready:         7
+  Available:     7
+
+NAME                                  KIND         STATUS     AGE    INFO
+⟳ demo-app                            Rollout      ॥ Paused   13m
+├──# revision:2
+│  ├──⧉ demo-app-6b8478797            ReplicaSet   ✔ Healthy  2m37s  canary
+│  │  ├──□ demo-app-6b8478797-4n2hp   Pod          ✔ Running  2m36s  ready:2/2
+│  │  └──□ demo-app-6b8478797-d4wnb   Pod          ✔ Running  25s    ready:2/2
+│  └──α demo-app-6b8478797-2          AnalysisRun  ◌ Running  25s    ⚠ 6
+└──# revision:1
+   └──⧉ demo-app-788d74444d           ReplicaSet   ✔ Healthy  13m    stable
+      ├──□ demo-app-788d74444d-ztlqp  Pod          ✔ Running  13m    ready:2/2
+      ├──□ demo-app-788d74444d-8nhld  Pod          ✔ Running  13m    ready:2/2
+      ├──□ demo-app-788d74444d-bsmxg  Pod          ✔ Running  13m    ready:2/2
+      ├──□ demo-app-788d74444d-djln8  Pod          ✔ Running  13m    ready:2/2
+      └──□ demo-app-788d74444d-mcn8c  Pod          ✔ Running  13m    ready:2/2
+--
+Tue 22 Jul 2025 15:02:19 BST
+--
+Name:            demo-app
+Namespace:       my-demo
+Status:          ॥ Paused
+Message:         CanaryPauseStep
+Strategy:        Canary
+  Step:          3/11
+  SetWeight:     25
+  ActualWeight:  25
+Images:          nginx:1.20 (canary, stable)
+Replicas:
+  Desired:       5
+  Current:       7
+  Updated:       2
+  Ready:         7
+  Available:     7
+
+NAME                                  KIND         STATUS     AGE    INFO
+⟳ demo-app                            Rollout      ॥ Paused   13m
+├──# revision:2
+│  ├──⧉ demo-app-6b8478797            ReplicaSet   ✔ Healthy  2m47s  canary
+│  │  ├──□ demo-app-6b8478797-4n2hp   Pod          ✔ Running  2m46s  ready:2/2
+│  │  └──□ demo-app-6b8478797-d4wnb   Pod          ✔ Running  35s    ready:2/2
+│  └──α demo-app-6b8478797-2          AnalysisRun  ◌ Running  35s    ⚠ 8
+└──# revision:1
+   └──⧉ demo-app-788d74444d           ReplicaSet   ✔ Healthy  13m    stable
+      ├──□ demo-app-788d74444d-ztlqp  Pod          ✔ Running  13m    ready:2/2
+      ├──□ demo-app-788d74444d-8nhld  Pod          ✔ Running  13m    ready:2/2
+      ├──□ demo-app-788d74444d-bsmxg  Pod          ✔ Running  13m    ready:2/2
+      ├──□ demo-app-788d74444d-djln8  Pod          ✔ Running  13m    ready:2/2
+      └──□ demo-app-788d74444d-mcn8c  Pod          ✔ Running  13m    ready:2/2
+--
+Tue 22 Jul 2025 15:02:29 BST
+--
+Name:            demo-app
+Namespace:       my-demo
+Status:          ✖ Degraded
+Message:         RolloutAborted: Rollout aborted update to revision 2: Metric "success-rate" assessed Error due to consecutiveErrors (5) > consecutiveErrorLimit (4): "Error Message: Post "http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090/api/v1/query": dial tcp: lookup kube-prometheus-stack-prometheus.monitoring.svc.cluster.local on 10.43.0.10:53: no such host"
+Strategy:        Canary
+  Step:          0/11
+  SetWeight:     0
+  ActualWeight:  0
+Images:          nginx:1.20 (canary, stable)
+Replicas:
+  Desired:       5
+  Current:       7
+  Updated:       2
+  Ready:         7
+  Available:     7
+
+NAME                                  KIND         STATUS      AGE    INFO
+⟳ demo-app                            Rollout      ✖ Degraded  14m
+├──# revision:2
+│  ├──⧉ demo-app-6b8478797            ReplicaSet   ✔ Healthy   2m58s  canary,delay:23s
+│  │  ├──□ demo-app-6b8478797-4n2hp   Pod          ✔ Running   2m57s  ready:2/2
+│  │  └──□ demo-app-6b8478797-d4wnb   Pod          ✔ Running   46s    ready:2/2
+│  └──α demo-app-6b8478797-2          AnalysisRun  ⚠ Error     46s    ⚠ 10
+└──# revision:1
+   └──⧉ demo-app-788d74444d           ReplicaSet   ✔ Healthy   14m    stable
+      ├──□ demo-app-788d74444d-ztlqp  Pod          ✔ Running   14m    ready:2/2
+      ├──□ demo-app-788d74444d-8nhld  Pod          ✔ Running   14m    ready:2/2
+      ├──□ demo-app-788d74444d-bsmxg  Pod          ✔ Running   14m    ready:2/2
+      ├──□ demo-app-788d74444d-djln8  Pod          ✔ Running   14m    ready:2/2
+      └──□ demo-app-788d74444d-mcn8c  Pod          ✔ Running   14m    ready:2/2
+--
+Tue 22 Jul 2025 15:02:40 BST
+--
+Name:            demo-app
+Namespace:       my-demo
+Status:          ✖ Degraded
+Message:         RolloutAborted: Rollout aborted update to revision 2: Metric "success-rate" assessed Error due to consecutiveErrors (5) > consecutiveErrorLimit (4): "Error Message: Post "http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090/api/v1/query": dial tcp: lookup kube-prometheus-stack-prometheus.monitoring.svc.cluster.local on 10.43.0.10:53: no such host"
+Strategy:        Canary
+  Step:          0/11
+  SetWeight:     0
+  ActualWeight:  0
+Images:          nginx:1.20 (canary, stable)
+Replicas:
+  Desired:       5
+  Current:       7
+  Updated:       2
+  Ready:         7
+  Available:     7
+
+NAME                                  KIND         STATUS      AGE   INFO
+⟳ demo-app                            Rollout      ✖ Degraded  14m
+├──# revision:2
+│  ├──⧉ demo-app-6b8478797            ReplicaSet   ✔ Healthy   3m8s  canary,delay:13s
+│  │  ├──□ demo-app-6b8478797-4n2hp   Pod          ✔ Running   3m7s  ready:2/2
+│  │  └──□ demo-app-6b8478797-d4wnb   Pod          ✔ Running   56s   ready:2/2
+│  └──α demo-app-6b8478797-2          AnalysisRun  ⚠ Error     56s   ⚠ 10
+└──# revision:1
+   └──⧉ demo-app-788d74444d           ReplicaSet   ✔ Healthy   14m   stable
+      ├──□ demo-app-788d74444d-ztlqp  Pod          ✔ Running   14m   ready:2/2
+      ├──□ demo-app-788d74444d-8nhld  Pod          ✔ Running   14m   ready:2/2
+      ├──□ demo-app-788d74444d-bsmxg  Pod          ✔ Running   14m   ready:2/2
+      ├──□ demo-app-788d74444d-djln8  Pod          ✔ Running   14m   ready:2/2
+      └──□ demo-app-788d74444d-mcn8c  Pod          ✔ Running   14m   ready:2/2
+--
+Tue 22 Jul 2025 15:02:50 BST
+--
+Name:            demo-app
+Namespace:       my-demo
+Status:          ✖ Degraded
+Message:         RolloutAborted: Rollout aborted update to revision 2: Metric "success-rate" assessed Error due to consecutiveErrors (5) > consecutiveErrorLimit (4): "Error Message: Post "http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090/api/v1/query": dial tcp: lookup kube-prometheus-stack-prometheus.monitoring.svc.cluster.local on 10.43.0.10:53: no such host"
+Strategy:        Canary
+  Step:          0/11
+  SetWeight:     0
+  ActualWeight:  0
+Images:          nginx:1.20 (canary, stable)
+Replicas:
+  Desired:       5
+  Current:       7
+  Updated:       2
+  Ready:         7
+  Available:     7
+
+NAME                                  KIND         STATUS      AGE    INFO
+⟳ demo-app                            Rollout      ✖ Degraded  14m
+├──# revision:2
+│  ├──⧉ demo-app-6b8478797            ReplicaSet   ✔ Healthy   3m19s  canary,delay:2s
+│  │  ├──□ demo-app-6b8478797-4n2hp   Pod          ✔ Running   3m18s  ready:2/2
+│  │  └──□ demo-app-6b8478797-d4wnb   Pod          ✔ Running   67s    ready:2/2
+│  └──α demo-app-6b8478797-2          AnalysisRun  ⚠ Error     67s    ⚠ 10
+└──# revision:1
+   └──⧉ demo-app-788d74444d           ReplicaSet   ✔ Healthy   14m    stable
+      ├──□ demo-app-788d74444d-ztlqp  Pod          ✔ Running   14m    ready:2/2
+      ├──□ demo-app-788d74444d-8nhld  Pod          ✔ Running   14m    ready:2/2
+      ├──□ demo-app-788d74444d-bsmxg  Pod          ✔ Running   14m    ready:2/2
+      ├──□ demo-app-788d74444d-djln8  Pod          ✔ Running   14m    ready:2/2
+      └──□ demo-app-788d74444d-mcn8c  Pod          ✔ Running   14m    ready:2/2
+--
+Tue 22 Jul 2025 15:03:01 BST
+--
+Name:            demo-app
+Namespace:       my-demo
+Status:          ✖ Degraded
+Message:         RolloutAborted: Rollout aborted update to revision 2: Metric "success-rate" assessed Error due to consecutiveErrors (5) > consecutiveErrorLimit (4): "Error Message: Post "http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090/api/v1/query": dial tcp: lookup kube-prometheus-stack-prometheus.monitoring.svc.cluster.local on 10.43.0.10:53: no such host"
+Strategy:        Canary
+  Step:          0/11
+  SetWeight:     0
+  ActualWeight:  0
+Images:          nginx:1.20 (stable)
+Replicas:
+  Desired:       5
+  Current:       5
+  Updated:       0
+  Ready:         5
+  Available:     5
+
+NAME                                  KIND         STATUS         AGE    INFO
+⟳ demo-app                            Rollout      ✖ Degraded     14m
+├──# revision:2
+│  ├──⧉ demo-app-6b8478797            ReplicaSet   • ScaledDown   3m29s  canary,delay:passed
+│  │  ├──□ demo-app-6b8478797-4n2hp   Pod          ◌ Terminating  3m28s  ready:2/2
+│  │  └──□ demo-app-6b8478797-d4wnb   Pod          ◌ Terminating  77s    ready:2/2
+│  └──α demo-app-6b8478797-2          AnalysisRun  ⚠ Error        77s    ⚠ 10
+└──# revision:1
+   └──⧉ demo-app-788d74444d           ReplicaSet   ✔ Healthy      14m    stable
+      ├──□ demo-app-788d74444d-ztlqp  Pod          ✔ Running      14m    ready:2/2
+      ├──□ demo-app-788d74444d-8nhld  Pod          ✔ Running      14m    ready:2/2
+      ├──□ demo-app-788d74444d-bsmxg  Pod          ✔ Running      14m    ready:2/2
+      ├──□ demo-app-788d74444d-djln8  Pod          ✔ Running      14m    ready:2/2
+      └──□ demo-app-788d74444d-mcn8c  Pod          ✔ Running      14m    ready:2/2
+--
+Tue 22 Jul 2025 15:03:11 BST
+--
+Name:            demo-app
+Namespace:       my-demo
+Status:          ✖ Degraded
+Message:         RolloutAborted: Rollout aborted update to revision 2: Metric "success-rate" assessed Error due to consecutiveErrors (5) > consecutiveErrorLimit (4): "Error Message: Post "http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090/api/v1/query": dial tcp: lookup kube-prometheus-stack-prometheus.monitoring.svc.cluster.local on 10.43.0.10:53: no such host"
+Strategy:        Canary
+  Step:          0/11
+  SetWeight:     0
+  ActualWeight:  0
+Images:          nginx:1.20 (stable)
+Replicas:
+  Desired:       5
+  Current:       5
+  Updated:       0
+  Ready:         5
+  Available:     5
+
+NAME                                  KIND         STATUS        AGE    INFO
+⟳ demo-app                            Rollout      ✖ Degraded    14m
+├──# revision:2
+│  ├──⧉ demo-app-6b8478797            ReplicaSet   • ScaledDown  3m40s  canary,delay:passed
+│  └──α demo-app-6b8478797-2          AnalysisRun  ⚠ Error       88s    ⚠ 10
+└──# revision:1
+   └──⧉ demo-app-788d74444d           ReplicaSet   ✔ Healthy     14m    stable
+      ├──□ demo-app-788d74444d-ztlqp  Pod          ✔ Running     14m    ready:2/2
+      ├──□ demo-app-788d74444d-8nhld  Pod          ✔ Running     14m    ready:2/2
+      ├──□ demo-app-788d74444d-bsmxg  Pod          ✔ Running     14m    ready:2/2
+      ├──□ demo-app-788d74444d-djln8  Pod          ✔ Running     14m    ready:2/2
+      └──□ demo-app-788d74444d-mcn8c  Pod          ✔ Running     14m    ready:2/2
+--
+Tue 22 Jul 2025 15:03:22 BST
+--
+Name:            demo-app
+Namespace:       my-demo
+Status:          ✖ Degraded
+Message:         RolloutAborted: Rollout aborted update to revision 2: Metric "success-rate" assessed Error due to consecutiveErrors (5) > consecutiveErrorLimit (4): "Error Message: Post "http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090/api/v1/query": dial tcp: lookup kube-prometheus-stack-prometheus.monitoring.svc.cluster.local on 10.43.0.10:53: no such host"
+Strategy:        Canary
+  Step:          0/11
+  SetWeight:     0
+  ActualWeight:  0
+Images:          nginx:1.20 (stable)
+Replicas:
+  Desired:       5
+  Current:       5
+  Updated:       0
+  Ready:         5
+  Available:     5
+
+NAME                                  KIND         STATUS        AGE    INFO
+⟳ demo-app                            Rollout      ✖ Degraded    14m
+├──# revision:2
+│  ├──⧉ demo-app-6b8478797            ReplicaSet   • ScaledDown  3m50s  canary,delay:passed
+│  └──α demo-app-6b8478797-2          AnalysisRun  ⚠ Error       98s    ⚠ 10
+└──# revision:1
+   └──⧉ demo-app-788d74444d           ReplicaSet   ✔ Healthy     14m    stable
+      ├──□ demo-app-788d74444d-ztlqp  Pod          ✔ Running     14m    ready:2/2
+      ├──□ demo-app-788d74444d-8nhld  Pod          ✔ Running     14m    ready:2/2
+      ├──□ demo-app-788d74444d-bsmxg  Pod          ✔ Running     14m    ready:2/2
+      ├──□ demo-app-788d74444d-djln8  Pod          ✔ Running     14m    ready:2/2
+      └──□ demo-app-788d74444d-mcn8c  Pod          ✔ Running     14m    ready:2/2
+--
+Tue 22 Jul 2025 15:03:32 BST
+--
+Name:            demo-app
+Namespace:       my-demo
+Status:          ✖ Degraded
+Message:         RolloutAborted: Rollout aborted update to revision 2: Metric "success-rate" assessed Error due to consecutiveErrors (5) > consecutiveErrorLimit (4): "Error Message: Post "http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090/api/v1/query": dial tcp: lookup kube-prometheus-stack-prometheus.monitoring.svc.cluster.local on 10.43.0.10:53: no such host"
+Strategy:        Canary
+  Step:          0/11
+  SetWeight:     0
+  ActualWeight:  0
+Images:          nginx:1.20 (stable)
+Replicas:
+  Desired:       5
+  Current:       5
+  Updated:       0
+  Ready:         5
+  Available:     5
+
+NAME                                  KIND         STATUS        AGE   INFO
+⟳ demo-app                            Rollout      ✖ Degraded    15m
+├──# revision:2
+│  ├──⧉ demo-app-6b8478797            ReplicaSet   • ScaledDown  4m    canary,delay:passed
+│  └──α demo-app-6b8478797-2          AnalysisRun  ⚠ Error       108s  ⚠ 10
+└──# revision:1
+   └──⧉ demo-app-788d74444d           ReplicaSet   ✔ Healthy     15m   stable
+      ├──□ demo-app-788d74444d-ztlqp  Pod          ✔ Running     15m   ready:2/2
+      ├──□ demo-app-788d74444d-8nhld  Pod          ✔ Running     15m   ready:2/2
+      ├──□ demo-app-788d74444d-bsmxg  Pod          ✔ Running     15m   ready:2/2
+      ├──□ demo-app-788d74444d-djln8  Pod          ✔ Running     15m   ready:2/2
+      └──□ demo-app-788d74444d-mcn8c  Pod          ✔ Running     15m   ready:2/2
+--
+Tue 22 Jul 2025 15:03:42 BST
+--
+Name:            demo-app
+Namespace:       my-demo
+Status:          ✖ Degraded
+Message:         RolloutAborted: Rollout aborted update to revision 2: Metric "success-rate" assessed Error due to consecutiveErrors (5) > consecutiveErrorLimit (4): "Error Message: Post "http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090/api/v1/query": dial tcp: lookup kube-prometheus-stack-prometheus.monitoring.svc.cluster.local on 10.43.0.10:53: no such host"
+Strategy:        Canary
+  Step:          0/11
+  SetWeight:     0
+  ActualWeight:  0
+Images:          nginx:1.20 (stable)
+Replicas:
+  Desired:       5
+  Current:       5
+  Updated:       0
+  Ready:         5
+  Available:     5
+
+NAME                                  KIND         STATUS        AGE    INFO
+⟳ demo-app                            Rollout      ✖ Degraded    15m
+├──# revision:2
+│  ├──⧉ demo-app-6b8478797            ReplicaSet   • ScaledDown  4m10s  canary,delay:passed
+│  └──α demo-app-6b8478797-2          AnalysisRun  ⚠ Error       118s   ⚠ 10
+└──# revision:1
+   └──⧉ demo-app-788d74444d           ReplicaSet   ✔ Healthy     15m    stable
+      ├──□ demo-app-788d74444d-ztlqp  Pod          ✔ Running     15m    ready:2/2
+      ├──□ demo-app-788d74444d-8nhld  Pod          ✔ Running     15m    ready:2/2
+      ├──□ demo-app-788d74444d-bsmxg  Pod          ✔ Running     15m    ready:2/2
+      ├──□ demo-app-788d74444d-djln8  Pod          ✔ Running     15m    ready:2/2
+      └──□ demo-app-788d74444d-mcn8c  Pod          ✔ Running     15m    ready:2/2
+--
+Tue 22 Jul 2025 15:03:52 BST
+--
+Name:            demo-app
+Namespace:       my-demo
+Status:          ✖ Degraded
+Message:         RolloutAborted: Rollout aborted update to revision 2: Metric "success-rate" assessed Error due to consecutiveErrors (5) > consecutiveErrorLimit (4): "Error Message: Post "http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090/api/v1/query": dial tcp: lookup kube-prometheus-stack-prometheus.monitoring.svc.cluster.local on 10.43.0.10:53: no such host"
+Strategy:        Canary
+  Step:          0/11
+  SetWeight:     0
+  ActualWeight:  0
+Images:          nginx:1.20 (stable)
+Replicas:
+  Desired:       5
+  Current:       5
+  Updated:       0
+  Ready:         5
+  Available:     5
+
+NAME                                  KIND         STATUS        AGE    INFO
+⟳ demo-app                            Rollout      ✖ Degraded    15m
+├──# revision:2
+│  ├──⧉ demo-app-6b8478797            ReplicaSet   • ScaledDown  4m21s  canary,delay:passed
+│  └──α demo-app-6b8478797-2          AnalysisRun  ⚠ Error       2m9s   ⚠ 10
+└──# revision:1
+   └──⧉ demo-app-788d74444d           ReplicaSet   ✔ Healthy     15m    stable
+      ├──□ demo-app-788d74444d-ztlqp  Pod          ✔ Running     15m    ready:2/2
+      ├──□ demo-app-788d74444d-8nhld  Pod          ✔ Running     15m    ready:2/2
+      ├──□ demo-app-788d74444d-bsmxg  Pod          ✔ Running     15m    ready:2/2
+      ├──□ demo-app-788d74444d-djln8  Pod          ✔ Running     15m    ready:2/2
+      └──□ demo-app-788d74444d-mcn8c  Pod          ✔ Running     15m    ready:2/2
+--
+Tue 22 Jul 2025 15:04:03 BST
+--
+Name:            demo-app
+Namespace:       my-demo
+Status:          ✖ Degraded
+Message:         RolloutAborted: Rollout aborted update to revision 2: Metric "success-rate" assessed Error due to consecutiveErrors (5) > consecutiveErrorLimit (4): "Error Message: Post "http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090/api/v1/query": dial tcp: lookup kube-prometheus-stack-prometheus.monitoring.svc.cluster.local on 10.43.0.10:53: no such host"
+Strategy:        Canary
+  Step:          0/11
+  SetWeight:     0
+  ActualWeight:  0
+Images:          nginx:1.20 (stable)
+Replicas:
+  Desired:       5
+  Current:       5
+  Updated:       0
+  Ready:         5
+  Available:     5
+
+NAME                                  KIND         STATUS        AGE    INFO
+⟳ demo-app                            Rollout      ✖ Degraded    15m
+├──# revision:2
+│  ├──⧉ demo-app-6b8478797            ReplicaSet   • ScaledDown  4m31s  canary,delay:passed
+│  └──α demo-app-6b8478797-2          AnalysisRun  ⚠ Error       2m19s  ⚠ 10
+└──# revision:1
+   └──⧉ demo-app-788d74444d           ReplicaSet   ✔ Healthy     15m    stable
+      ├──□ demo-app-788d74444d-ztlqp  Pod          ✔ Running     15m    ready:2/2
+      ├──□ demo-app-788d74444d-8nhld  Pod          ✔ Running     15m    ready:2/2
+      ├──□ demo-app-788d74444d-bsmxg  Pod          ✔ Running     15m    ready:2/2
+      ├──□ demo-app-788d74444d-djln8  Pod          ✔ Running     15m    ready:2/2
+      └──□ demo-app-788d74444d-mcn8c  Pod          ✔ Running     15m    ready:2/2
+--
+Tue 22 Jul 2025 15:04:13 BST
+--
+Name:            demo-app
+Namespace:       my-demo
+Status:          ✖ Degraded
+Message:         RolloutAborted: Rollout aborted update to revision 2: Metric "success-rate" assessed Error due to consecutiveErrors (5) > consecutiveErrorLimit (4): "Error Message: Post "http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090/api/v1/query": dial tcp: lookup kube-prometheus-stack-prometheus.monitoring.svc.cluster.local on 10.43.0.10:53: no such host"
+Strategy:        Canary
+  Step:          0/11
+  SetWeight:     0
+  ActualWeight:  0
+Images:          nginx:1.20 (stable)
+Replicas:
+  Desired:       5
+  Current:       5
+  Updated:       0
+  Ready:         5
+  Available:     5
+
+NAME                                  KIND         STATUS        AGE    INFO
+⟳ demo-app                            Rollout      ✖ Degraded    15m
+├──# revision:2
+│  ├──⧉ demo-app-6b8478797            ReplicaSet   • ScaledDown  4m41s  canary,delay:passed
+│  └──α demo-app-6b8478797-2          AnalysisRun  ⚠ Error       2m29s  ⚠ 10
+└──# revision:1
+   └──⧉ demo-app-788d74444d           ReplicaSet   ✔ Healthy     15m    stable
+      ├──□ demo-app-788d74444d-ztlqp  Pod          ✔ Running     15m    ready:2/2
+      ├──□ demo-app-788d74444d-8nhld  Pod          ✔ Running     15m    ready:2/2
+      ├──□ demo-app-788d74444d-bsmxg  Pod          ✔ Running     15m    ready:2/2
+      ├──□ demo-app-788d74444d-djln8  Pod          ✔ Running     15m    ready:2/2
+      └──□ demo-app-788d74444d-mcn8c  Pod          ✔ Running     15m    ready:2/2
+--
+Tue 22 Jul 2025 15:04:23 BST
+--
+Name:            demo-app
+Namespace:       my-demo
+Status:          ✖ Degraded
+Message:         RolloutAborted: Rollout aborted update to revision 2: Metric "success-rate" assessed Error due to consecutiveErrors (5) > consecutiveErrorLimit (4): "Error Message: Post "http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090/api/v1/query": dial tcp: lookup kube-prometheus-stack-prometheus.monitoring.svc.cluster.local on 10.43.0.10:53: no such host"
+Strategy:        Canary
+  Step:          0/11
+  SetWeight:     0
+  ActualWeight:  0
+Images:          nginx:1.20 (stable)
+Replicas:
+  Desired:       5
+  Current:       5
+  Updated:       0
+  Ready:         5
+  Available:     5
+
+NAME                                  KIND         STATUS        AGE    INFO
+⟳ demo-app                            Rollout      ✖ Degraded    15m
+├──# revision:2
+│  ├──⧉ demo-app-6b8478797            ReplicaSet   • ScaledDown  4m52s  canary,delay:passed
+│  └──α demo-app-6b8478797-2          AnalysisRun  ⚠ Error       2m40s  ⚠ 10
+└──# revision:1
+   └──⧉ demo-app-788d74444d           ReplicaSet   ✔ Healthy     15m    stable
+      ├──□ demo-app-788d74444d-ztlqp  Pod          ✔ Running     15m    ready:2/2
+      ├──□ demo-app-788d74444d-8nhld  Pod          ✔ Running     15m    ready:2/2
+      ├──□ demo-app-788d74444d-bsmxg  Pod          ✔ Running     15m    ready:2/2
+      ├──□ demo-app-788d74444d-djln8  Pod          ✔ Running     15m    ready:2/2
+      └──□ demo-app-788d74444d-mcn8c  Pod          ✔ Running     15m    ready:2/2
+--
+Tue 22 Jul 2025 15:04:34 BST
+--
+Name:            demo-app
+Namespace:       my-demo
+Status:          ✖ Degraded
+Message:         RolloutAborted: Rollout aborted update to revision 2: Metric "success-rate" assessed Error due to consecutiveErrors (5) > consecutiveErrorLimit (4): "Error Message: Post "http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090/api/v1/query": dial tcp: lookup kube-prometheus-stack-prometheus.monitoring.svc.cluster.local on 10.43.0.10:53: no such host"
+Strategy:        Canary
+  Step:          0/11
+  SetWeight:     0
+  ActualWeight:  0
+Images:          nginx:1.20 (stable)
+Replicas:
+  Desired:       5
+  Current:       5
+  Updated:       0
+  Ready:         5
+  Available:     5
+
+NAME                                  KIND         STATUS        AGE    INFO
+⟳ demo-app                            Rollout      ✖ Degraded    16m
+├──# revision:2
+│  ├──⧉ demo-app-6b8478797            ReplicaSet   • ScaledDown  5m2s   canary,delay:passed
+│  └──α demo-app-6b8478797-2          AnalysisRun  ⚠ Error       2m50s  ⚠ 10
+└──# revision:1
+   └──⧉ demo-app-788d74444d           ReplicaSet   ✔ Healthy     16m    stable
+      ├──□ demo-app-788d74444d-ztlqp  Pod          ✔ Running     16m    ready:2/2
+      ├──□ demo-app-788d74444d-8nhld  Pod          ✔ Running     16m    ready:2/2
+      ├──□ demo-app-788d74444d-bsmxg  Pod          ✔ Running     16m    ready:2/2
+      ├──□ demo-app-788d74444d-djln8  Pod          ✔ Running     16m    ready:2/2
+      └──□ demo-app-788d74444d-mcn8c  Pod          ✔ Running     16m    ready:2/2
+--
+Tue 22 Jul 2025 15:04:44 BST
+--
+^C%
+╭─vkancherla in ~/Downloads/Devops-Projects/Argo-Rollouts-Istio on main ✘ (origin/main)
+╰$ k replace --force -n my-demo -f analysis_prometheus_example/analysis-templates.yaml        15:04
+analysistemplate.argoproj.io "success-rate" deleted
+analysistemplate.argoproj.io "error-rate" deleted
+analysistemplate.argoproj.io "comprehensive-error-rate" deleted
+analysistemplate.argoproj.io "client-error-rate" deleted
+analysistemplate.argoproj.io "server-error-rate" deleted
+analysistemplate.argoproj.io/success-rate replaced
+analysistemplate.argoproj.io/error-rate replaced
+analysistemplate.argoproj.io/comprehensive-error-rate replaced
+analysistemplate.argoproj.io/client-error-rate replaced
+analysistemplate.argoproj.io/server-error-rate replaced
+╭─vkancherla in ~/Downloads/Devops-Projects/Argo-Rollouts-Istio on main ✘ (origin/main)
+╰$ while true; do kubectl argo rollouts -n my-demo get rollout demo-app; echo "--"; date; echo "--"; sleep 10; done
+Name:            demo-app
+Namespace:       my-demo
+Status:          ✖ Degraded
+Message:         RolloutAborted: Rollout aborted update to revision 2: Metric "success-rate" assessed Error due to consecutiveErrors (5) > consecutiveErrorLimit (4): "Error Message: Post "http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090/api/v1/query": dial tcp: lookup kube-prometheus-stack-prometheus.monitoring.svc.cluster.local on 10.43.0.10:53: no such host"
+Strategy:        Canary
+  Step:          0/11
+  SetWeight:     0
+  ActualWeight:  0
+Images:          nginx:1.20 (stable)
+Replicas:
+  Desired:       5
+  Current:       5
+  Updated:       0
+  Ready:         5
+  Available:     5
+
+NAME                                  KIND         STATUS        AGE    INFO
+⟳ demo-app                            Rollout      ✖ Degraded    17m
+├──# revision:2
+│  ├──⧉ demo-app-6b8478797            ReplicaSet   • ScaledDown  5m59s  canary,delay:passed
+│  └──α demo-app-6b8478797-2          AnalysisRun  ⚠ Error       3m47s  ⚠ 10
+└──# revision:1
+   └──⧉ demo-app-788d74444d           ReplicaSet   ✔ Healthy     17m    stable
+      ├──□ demo-app-788d74444d-ztlqp  Pod          ✔ Running     17m    ready:2/2
+      ├──□ demo-app-788d74444d-8nhld  Pod          ✔ Running     17m    ready:2/2
+      ├──□ demo-app-788d74444d-bsmxg  Pod          ✔ Running     17m    ready:2/2
+      ├──□ demo-app-788d74444d-djln8  Pod          ✔ Running     17m    ready:2/2
+      └──□ demo-app-788d74444d-mcn8c  Pod          ✔ Running     17m    ready:2/2
+--
+Tue 22 Jul 2025 15:05:41 BST
+--
+Name:            demo-app
+Namespace:       my-demo
+Status:          ✖ Degraded
+Message:         RolloutAborted: Rollout aborted update to revision 2: Metric "success-rate" assessed Error due to consecutiveErrors (5) > consecutiveErrorLimit (4): "Error Message: Post "http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090/api/v1/query": dial tcp: lookup kube-prometheus-stack-prometheus.monitoring.svc.cluster.local on 10.43.0.10:53: no such host"
+Strategy:        Canary
+  Step:          0/11
+  SetWeight:     0
+  ActualWeight:  0
+Images:          nginx:1.20 (stable)
+Replicas:
+  Desired:       5
+  Current:       5
+  Updated:       0
+  Ready:         5
+  Available:     5
+
+NAME                                  KIND         STATUS        AGE    INFO
+⟳ demo-app                            Rollout      ✖ Degraded    17m
+├──# revision:2
+│  ├──⧉ demo-app-6b8478797            ReplicaSet   • ScaledDown  6m9s   canary,delay:passed
+│  └──α demo-app-6b8478797-2          AnalysisRun  ⚠ Error       3m57s  ⚠ 10
+└──# revision:1
+   └──⧉ demo-app-788d74444d           ReplicaSet   ✔ Healthy     17m    stable
+      ├──□ demo-app-788d74444d-ztlqp  Pod          ✔ Running     17m    ready:2/2
+      ├──□ demo-app-788d74444d-8nhld  Pod          ✔ Running     17m    ready:2/2
+      ├──□ demo-app-788d74444d-bsmxg  Pod          ✔ Running     17m    ready:2/2
+      ├──□ demo-app-788d74444d-djln8  Pod          ✔ Running     17m    ready:2/2
+      └──□ demo-app-788d74444d-mcn8c  Pod          ✔ Running     17m    ready:2/2
+--
+Tue 22 Jul 2025 15:05:51 BST
+--
+Name:            demo-app
+Namespace:       my-demo
+Status:          ✖ Degraded
+Message:         RolloutAborted: Rollout aborted update to revision 2: Metric "success-rate" assessed Error due to consecutiveErrors (5) > consecutiveErrorLimit (4): "Error Message: Post "http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090/api/v1/query": dial tcp: lookup kube-prometheus-stack-prometheus.monitoring.svc.cluster.local on 10.43.0.10:53: no such host"
+Strategy:        Canary
+  Step:          0/11
+  SetWeight:     0
+  ActualWeight:  0
+Images:          nginx:1.20 (stable)
+Replicas:
+  Desired:       5
+  Current:       5
+  Updated:       0
+  Ready:         5
+  Available:     5
+
+NAME                                  KIND         STATUS        AGE    INFO
+⟳ demo-app                            Rollout      ✖ Degraded    17m
+├──# revision:2
+│  ├──⧉ demo-app-6b8478797            ReplicaSet   • ScaledDown  6m20s  canary,delay:passed
+│  └──α demo-app-6b8478797-2          AnalysisRun  ⚠ Error       4m8s   ⚠ 10
+└──# revision:1
+   └──⧉ demo-app-788d74444d           ReplicaSet   ✔ Healthy     17m    stable
+      ├──□ demo-app-788d74444d-ztlqp  Pod          ✔ Running     17m    ready:2/2
+      ├──□ demo-app-788d74444d-8nhld  Pod          ✔ Running     17m    ready:2/2
+      ├──□ demo-app-788d74444d-bsmxg  Pod          ✔ Running     17m    ready:2/2
+      ├──□ demo-app-788d74444d-djln8  Pod          ✔ Running     17m    ready:2/2
+      └──□ demo-app-788d74444d-mcn8c  Pod          ✔ Running     17m    ready:2/2
+--

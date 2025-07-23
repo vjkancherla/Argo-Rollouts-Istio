@@ -1,0 +1,219 @@
+# ==================================================================================
+# ARGO ROLLOUTS DEMO CANARY DEPLOYMENT
+# ==================================================================================
+#
+# This rollout implements a DEMO canary strategy for learning and testing:
+#
+# ANALYSIS STRATEGY:
+# - DEMO TEMPLATES: Uses Kubernetes Job-based analysis (no external dependencies)
+# - GLOBAL ANALYSIS ONLY: Background monitoring starting at 25% traffic
+# - NO STEP-LEVEL GATES: Rollout progresses automatically through traffic weights
+# - TESTING FOCUS: Demonstrates rollback behavior with random failures
+#
+# DEPLOYMENT FLOW:
+# 10% → (2min) → 25% → [ANALYSIS STARTS] → (1min) → 50% → (2min) → 75% → (1min) → 100%
+#                            ↓ (continuous background demo jobs)
+#                    [50% chance of automatic abort for learning]
+#
+# USE CASE: Learning rollout mechanics, testing rollback scenarios, demo environments
+# ==================================================================================
+
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: demo-app
+spec:
+  replicas: 5
+  strategy:
+    canary:
+      # Reference to a Service which the controller updates to point to the canary ReplicaSet
+      canaryService: demo-app-service-canary
+      # Reference to a Service which the controller updates to point to the stable ReplicaSet
+      stableService: demo-app-service-stable
+      trafficRouting:
+        istio:
+          # One or more virtualServices can be configured
+          # Reference to a VirtualService which the controller updates with canary weights
+          virtualServices:
+          - name: demo-app-vsvc # At least one virtualService is required
+            routes:
+            - primary # At least one route is required
+      
+      # ============================================================================
+      # GLOBAL ANALYSIS: Demo Templates for Learning and Testing
+      # ============================================================================
+      # This analysis uses DEMO TEMPLATES to demonstrate rollout behavior and 
+      # analysis integration without requiring external monitoring systems.
+      # 
+      # BEHAVIOR:
+      # - Runs continuously in parallel with rollout progression (NON-BLOCKING)
+      # - Uses Kubernetes Jobs instead of Prometheus metrics
+      # - IMMEDIATELY ABORTS entire rollout if analysis fails
+      # - Automatically sets canary weight to 0% on failure (instant rollback)
+      # - Perfect for learning rollout mechanics and testing rollback scenarios
+      #
+      # DEMO TEMPLATES USED:
+      # - random-fail: 50% chance of failure (tests rollback behavior)
+      # - always-pass: Always succeeds (ensures rollout completes)
+      #
+      # TIMELINE: 
+      # Step 1 (10%) → Step 2 (25%) → [ANALYSIS STARTS] → Step 3 (50%) → Step 4 (75%) → Step 5 (100%)
+      #                                      ↓ (runs continuously until completion)
+      #                              [Background demo job monitoring]
+      #
+      # NOTE: For production deployments, replace these with Istio/Prometheus templates
+      # ============================================================================
+      analysis:
+        templates:
+        - templateName: random-fail       # Demo: 50% failure rate for testing rollbacks
+        - templateName: always-pass       # Demo: Always passes to ensure some analysis succeeds
+        startingStep: 2                   # Start analysis after 25% traffic
+
+      # ============================================================================
+      # PROGRESSIVE ROLLOUT STEPS
+      # ============================================================================
+      # Simple traffic progression with time-based pauses only.
+      # No step-level analysis gates - relies on global analysis for safety.
+      # ============================================================================
+      steps:
+      # --------------------------------------------------------------------------
+      # STEP 1: Initial Canary (10% traffic)
+      # - Minimal traffic to new version for initial validation
+      # - 2-minute observation period before increasing traffic
+      # --------------------------------------------------------------------------
+      - setWeight: 10                   # 10% canary traffic
+      - pause: {duration: 2m}           # Observe initial deployment
+      
+      # --------------------------------------------------------------------------
+      # STEP 2: Early Traffic (25% traffic)
+      # - Increased traffic for better metrics signal
+      # - Global background analysis STARTS here
+      # - 1-minute pause before next increase
+      # --------------------------------------------------------------------------
+      - setWeight: 25                   # 25% canary traffic  
+      - pause: {duration: 1m}           # Brief pause, analysis now monitoring
+      
+      # --------------------------------------------------------------------------
+      # STEP 3: Medium Traffic (50% traffic)
+      # - Significant traffic increase to canary
+      # - Background analysis continues monitoring
+      # - 2-minute observation at this critical level
+      # --------------------------------------------------------------------------
+      - setWeight: 50                   # 50% canary traffic
+      - pause: {duration: 2m}           # Extended observation period
+      
+      # --------------------------------------------------------------------------
+      # STEP 4: High Traffic (75% traffic)
+      # - Majority traffic on canary version
+      # - Final validation period before full promotion
+      # - 1-minute pause before 100% rollout
+      # --------------------------------------------------------------------------
+      - setWeight: 75                   # 75% canary traffic
+      - pause: {duration: 1m}           # Final pause before full promotion
+      
+      # --------------------------------------------------------------------------
+      # STEP 5: Full Promotion (100% traffic)
+      # - Automatic progression to 100% if no analysis failures
+      # - Background analysis continues until rollout completion
+      # - Rollout marked as "Healthy" when fully deployed
+      # --------------------------------------------------------------------------
+      # Note: 100% weight happens automatically after final pause
+      
+  selector:
+    matchLabels:
+      app: demo-app
+  template:
+    metadata:
+      labels:
+        app: demo-app
+    spec:
+      containers:
+      - name: demo-app
+        image: nginx:1.20                # Base image - update this to trigger rollout
+        ports:
+        - containerPort: 80
+        env:
+        - name: VERSION
+          value: "v2.0"                  # Update this to see version changes
+        command: ["/bin/sh", "-c"]
+        args: 
+          - echo "<html><body><h1>Version - $(VERSION)</h1></body></html>" > /usr/share/nginx/html/index.html && exec nginx -g 'daemon off;'
+        # --------------------------------------------------------------------------
+        # HEALTH CHECKS: Essential for Istio sidecar injection and traffic routing
+        # --------------------------------------------------------------------------
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 10        # Wait 10s after container start
+          periodSeconds: 10              # Check every 10 seconds
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 5         # Ready check after 5s
+          periodSeconds: 5               # Check every 5 seconds
+        # --------------------------------------------------------------------------
+        # RESOURCE LIMITS: Production-ready resource management
+        # --------------------------------------------------------------------------
+        resources:
+          requests:
+            memory: "64Mi"               # Minimum memory reservation
+            cpu: "50m"                   # Minimum CPU reservation (0.05 cores)
+          limits:
+            memory: "128Mi"              # Maximum memory allowed
+            cpu: "100m"                  # Maximum CPU allowed (0.1 cores)
+
+# ==================================================================================
+# DEPLOYMENT GUIDE
+# ==================================================================================
+#
+# 1. PREREQUISITES:
+#    - Argo Rollouts installed and configured
+#    - Demo AnalysisTemplates deployed (always-pass, random-fail)
+#    - Services: demo-app-service-stable, demo-app-service-canary
+#    - VirtualService: demo-app-vsvc with 'primary' route (if using Istio)
+#    - No external monitoring required (uses Kubernetes Jobs)
+#
+# 2. TRIGGER ROLLOUT:
+#    kubectl argo rollouts set image demo-app demo-app=nginx:1.21 -n my-demo
+#    # OR update VERSION env var:
+#    kubectl patch rollout demo-app -n my-demo --type='json' \
+#      -p='[{"op": "replace", "path": "/spec/template/spec/containers/0/env/0/value", "value": "v2.0"}]'
+#
+# 3. MONITOR PROGRESS:
+#    kubectl argo rollouts get rollout demo-app -n my-demo --watch
+#    kubectl get analysisruns -n my-demo
+#    kubectl get jobs -n my-demo  # See demo analysis jobs
+#
+# 4. MANUAL CONTROLS (if needed):
+#    kubectl argo rollouts promote demo-app -n my-demo     # Skip to next step
+#    kubectl argo rollouts abort demo-app -n my-demo      # Abort and rollback
+#    kubectl argo rollouts retry demo-app -n my-demo      # Retry failed rollout
+#
+# ==================================================================================
+# ANALYSIS BEHAVIOR SUMMARY
+# ==================================================================================
+#
+# SUCCESS SCENARIO:
+# ✓ Traffic progresses: 10% → 25% → 50% → 75% → 100%
+# ✓ Background demo jobs run continuously (random-fail + always-pass)
+# ✓ Random-fail has 50% success rate, always-pass ensures some analysis succeeds
+# ✓ If lucky with random-fail, rollout completes with status "Healthy"
+# ✓ New version fully deployed
+#
+# FAILURE SCENARIO (expected ~50% of the time):
+# ✗ Random-fail template fails (designed behavior for learning)
+# ✗ Rollout immediately aborts regardless of current traffic weight
+# ✗ Canary weight automatically set to 0% (instant rollback to stable)
+# ✗ All traffic returns to stable version immediately
+# ✗ Rollout status becomes "Degraded"
+# ✗ This is EXPECTED behavior to demonstrate rollback mechanics
+#
+# LEARNING OUTCOMES:
+# 📚 Understand how background analysis works
+# 📚 See automatic rollback behavior in action
+# 📚 Learn rollout monitoring and control commands
+# 📚 Practice with manual promote/abort operations
+#
+# ==================================================================================

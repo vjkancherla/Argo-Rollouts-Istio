@@ -1,0 +1,246 @@
+# ==================================================================================
+# ARGO ROLLOUTS ANALYSIS CONFIGURATION GUIDE
+# ==================================================================================
+#
+# This rollout uses TWO types of analysis to ensure safe canary deployments:
+#
+# 1. GLOBAL ANALYSIS (Background Monitoring)
+#    - Runs continuously from startingStep until rollout completion
+#    - NON-BLOCKING: Rollout progresses through steps while analysis runs in parallel
+#    - IMMEDIATE ABORT: If analysis fails, entire rollout aborts and canary weight = 0%
+#    - USE FOR: Critical safety metrics that should always be monitored
+#
+# 2. STEP ANALYSIS (Quality Gates)  
+#    - Runs only during specific steps and BLOCKS progression
+#    - BLOCKING: Rollout waits at current step until analysis passes or fails
+#    - CONTROLLED PROGRESSION: Must pass to continue to next step
+#    - USE FOR: Validation checkpoints before major traffic increases
+#
+# COMBINED STRATEGY:
+# - Global analysis provides continuous safety monitoring
+# - Step analysis provides quality gates at critical traffic thresholds
+# ==================================================================================
+
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: demo-app
+spec:
+  replicas: 5
+  strategy:
+    canary:
+      # Reference to a Service which the controller updates to point to the canary ReplicaSet
+      canaryService: demo-app-service-canary
+      # Reference to a Service which the controller updates to point to the stable ReplicaSet
+      stableService: demo-app-service-stable
+      trafficRouting:
+        istio:
+          # One or more virtualServices can be configured
+          # Reference to a VirtualService which the controller updates with canary weights
+          virtualServices:
+          - name: demo-app-vsvc # At least one virtualService is required
+            routes:
+            - primary # At least one route is required
+      
+      # ============================================================================
+      # GLOBAL ANALYSIS: Background Safety Monitoring
+      # ============================================================================
+      # This analysis runs CONTINUOUSLY in the background starting from step 2
+      # and provides an automatic safety net throughout the entire rollout process.
+      #
+      # BEHAVIOR:
+      # - Starts at 25% traffic (startingStep: 2) 
+      # - Runs in parallel with rollout steps (NON-BLOCKING)
+      # - Monitors critical metrics: success rate + server errors
+      # - IMMEDIATELY ABORTS rollout if any metric fails
+      # - Sets canary weight to 0% on failure (automatic rollback)
+      #
+      # TIMELINE: Step 2 (25%) → [ANALYSIS STARTS] → Step 3 (50%) → Step 4 (75%) → Step 5 (100%)
+      #                                ↓ (continuous monitoring)
+      #                        [Background safety monitoring]
+      # ============================================================================
+      analysis:
+        templates:
+        - templateName: success-rate      # Must maintain ≥95% success rate
+        - templateName: server-error-rate # Must keep server errors ≤1%
+        startingStep: 2                   # Begin monitoring at 25% traffic
+        args:
+        - name: service-name
+          value: demo-app-service-canary  # Target canary service for analysis
+        - name: namespace
+          value: my-demo
+
+      # ============================================================================
+      # ROLLOUT STEPS WITH QUALITY GATES
+      # ============================================================================
+      # Each step represents a traffic weight increase with optional analysis gates.
+      # Step-level analysis BLOCKS progression until validation completes.
+      # ============================================================================
+      steps:
+      # --------------------------------------------------------------------------
+      # STEP 1: Initial Canary (10% traffic)
+      # - Small traffic sample to canary pods
+      # - 2-minute observation period
+      # - No analysis gate (just monitoring period)
+      # --------------------------------------------------------------------------
+      - setWeight: 10                   # 10% canary traffic
+      - pause: {duration: 2m}
+      
+      # --------------------------------------------------------------------------  
+      # STEP 2: Early Validation (25% traffic)
+      # - Increased traffic for better signal
+      # - 1-minute pause + BLOCKING analysis gate
+      # - Basic success rate validation before proceeding
+      # - Global background analysis STARTS here
+      # --------------------------------------------------------------------------
+      - setWeight: 25                   # 25% canary traffic  
+      - pause: {duration: 1m}
+      - analysis:                       # BLOCKING: Must pass to continue
+          templates:
+          - templateName: success-rate  # Quick validation gate
+          args:
+          - name: service-name
+            value: demo-app-service-canary
+          - name: namespace
+            value: my-demo
+      
+      # --------------------------------------------------------------------------
+      # STEP 3: Medium Traffic (50% traffic) 
+      # - Significant traffic increase
+      # - 2-minute pause + enhanced analysis gate
+      # - Success rate + general error rate validation
+      # - Critical checkpoint before majority traffic
+      # --------------------------------------------------------------------------
+      - setWeight: 50                   # 50% canary traffic
+      - pause: {duration: 2m}
+      - analysis:                       # BLOCKING: Enhanced validation
+          templates:
+          - templateName: success-rate            # ≥95% success rate
+          - templateName: error-rate              # ≤5% general error rate
+          args:
+          - name: service-name
+            value: demo-app-service-canary
+          - name: namespace
+            value: my-demo
+      
+      # --------------------------------------------------------------------------
+      # STEP 4: High Traffic (75% traffic)
+      # - Majority of traffic now on canary
+      # - 1-minute pause + comprehensive analysis gate  
+      # - Full validation suite before 100% promotion
+      # - Last chance to catch issues before full rollout
+      # --------------------------------------------------------------------------
+      - setWeight: 75                   # 75% canary traffic
+      - pause: {duration: 1m}
+      - analysis:                       # BLOCKING: Comprehensive validation
+          templates:
+          - templateName: success-rate            # ≥95% success rate
+          - templateName: server-error-rate       # ≤1% server errors  
+          - templateName: comprehensive-error-rate # ≤10% total errors
+          args:
+          - name: service-name
+            value: demo-app-service-canary
+          - name: namespace
+            value: my-demo
+      
+      # --------------------------------------------------------------------------
+      # STEP 5: Full Promotion (100% traffic)
+      # - Automatic progression to 100% if all analysis passes
+      # - Background analysis continues until completion
+      # - Rollout marked as "Healthy" when complete
+      # --------------------------------------------------------------------------
+      # Note: 100% weight happens automatically after final analysis passes
+      
+  selector:
+    matchLabels:
+      app: demo-app
+  template:
+    metadata:
+      labels:
+        app: demo-app
+    spec:
+      containers:
+      - name: demo-app
+        image: nginx:1.20
+        ports:
+        - containerPort: 80
+        env:
+        - name: VERSION
+          value: "v2.0"
+        command: ["/bin/sh", "-c"]
+        args: 
+          - echo "<html><body><h1>Version - $(VERSION)</h1></body></html>" > /usr/share/nginx/html/index.html && exec nginx -g 'daemon off;'
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 10
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "50m"
+          limits:
+            memory: "128Mi"
+            cpu: "100m"
+
+# ==================================================================================
+# ANALYSIS TEMPLATES EXPLANATION
+# ==================================================================================
+#
+# SUCCESS-RATE TEMPLATE:
+# - Measures: (non-5xx requests) / (total requests) 
+# - Threshold: ≥95% success rate
+# - Purpose: Overall service health indicator
+# - Failure Impact: Indicates service degradation
+#
+# SERVER-ERROR-RATE TEMPLATE:
+# - Measures: (5xx requests) / (total requests)
+# - Threshold: ≤1% server errors
+# - Purpose: Critical server-side error detection
+# - Failure Impact: Server-side issues (bugs, crashes, timeouts)
+#
+# ERROR-RATE TEMPLATE:  
+# - Measures: (5xx requests) / (total requests)
+# - Threshold: ≤5% error rate
+# - Purpose: General error monitoring
+# - Failure Impact: Broader error detection
+#
+# COMPREHENSIVE-ERROR-RATE TEMPLATE:
+# - Measures: (4xx + 5xx requests) / (total requests)
+# - Threshold: ≤10% total error rate  
+# - Purpose: Complete error spectrum monitoring
+# - Failure Impact: Client + server error detection
+#
+# ==================================================================================
+# FAILURE SCENARIOS & BEHAVIORS
+# ==================================================================================
+#
+# GLOBAL ANALYSIS FAILURE:
+# ✗ Background analysis detects metric violation
+# ✗ Rollout immediately aborts (regardless of current step)
+# ✗ Canary weight automatically set to 0%
+# ✗ Traffic returns to stable version instantly
+# ✗ Rollout status: "Degraded"
+#
+# STEP ANALYSIS FAILURE:
+# ✗ Analysis at specific step fails
+# ✗ Rollout pauses at current traffic weight
+# ✗ Does NOT automatically rollback
+# ✗ Manual intervention required (promote/abort)
+# ✗ Rollout status: "Paused"
+#
+# SUCCESS SCENARIO:
+# ✓ All analysis passes at each step
+# ✓ Rollout progresses: 10% → 25% → 50% → 75% → 100%
+# ✓ Background analysis continues monitoring
+# ✓ Final promotion to 100% when complete
+# ✓ Rollout status: "Healthy"
+#
+# ==================================================================================

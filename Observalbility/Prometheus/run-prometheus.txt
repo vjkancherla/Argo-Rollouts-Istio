@@ -1,0 +1,50 @@
+==============
+PROMETHEUS
+==============
+>> helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+
+>> helm search repo prometheus-community/kube-prometheus-stack --versions -l | more
+
+
+NOTE: the values file - prometheus-values.yaml - has been updated to include additional-scrape-configs to allow
+Prometheus to scale all ISTIO componenets (ingress, sidecars, etc) using annotations. See link below for more information.
+
+https://istio.io/latest/docs/ops/integrations/prometheus/#option-1-metrics-merging
+
+
+>> helm install dev-prometheus \
+prometheus-community/kube-prometheus-stack \
+--version 72.5.1 \
+--namespace monitoring \
+--create-namespace \
+-f prometheus-values.yaml
+
+IMPORTANT:
+    - If the values for the following properties are not set:
+        - prometheus.prometheusSpec.serviceMonitorSelector.matchLabels
+        - prometheus.prometheusSpec.podMonitorSelector.matchLabels
+    
+    By default, Helm sets Promethues chart's values to:
+        - prometheus.prometheusSpec.serviceMonitorSelector.matchLabels="release: <HELM-RELEASE-NAME>" [eg: release: "dev-prometheus" ]
+        - prometheus.prometheusSpec.podMonitorSelector.matchLabels="release: <HELM-RELEASE-NAME>" [eg: release: "dev-prometheus" ]
+   
+    - The above settings allow the "dev-prometheus" Promethues release/deployment to detect and srape metrics from 
+      all ServiceMonitor Objects that have the LABEL "release: dev-prometheus", 
+      and all PodMonitor objects that have the LABEL "release: dev-prometheus"
+
+    - The Prometheus chart creates the following serviceMonitor objects by deafult, all Prometheus to scrape metrics:
+        dev-prometheus-kube-prometh-coredns                   4h11m
+        dev-prometheus-kube-prometh-kube-scheduler            4h11m
+        dev-prometheus-kube-prometh-prometheus                4h11m
+        dev-prometheus-kube-prometh-kube-etcd                 4h11m
+        dev-prometheus-kube-prometh-alertmanager              4h11m
+        dev-prometheus-kube-prometh-kubelet                   4h11m
+        dev-prometheus-kube-prometh-kube-proxy                4h11m
+        dev-prometheus-kube-prometh-operator                  4h11m
+        dev-prometheus-kube-prometh-apiserver                 4h11m
+        dev-prometheus-kube-prometh-kube-controller-manager   4h11m
+
+
+>> k port-forward -n monitoring svc/dev-prometheus-kube-promet-prometheus 9090:9090
+
+>> In the console, go to Status > Target and confirm that see "targets" there (corresponding to the servicemonitors above)
