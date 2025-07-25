@@ -21,6 +21,7 @@ See [argo_rollouts_istio_guide.md](argo_rollouts_istio_guide.md) for installing 
 - Argo Rollouts
 - Argo Rollouts Plugin
 
+- Prometheus - [run-prometheus.txt](Observalbility/Prometheus/run-prometheus.txt)
 ---
 
 ## Core Application Configuration

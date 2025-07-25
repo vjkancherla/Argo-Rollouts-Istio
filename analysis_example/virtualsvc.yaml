@@ -1,3 +1,29 @@
+# =============================================================================
+# Istio VirtualService Configuration for Canary Deployments
+# =============================================================================
+#
+# Description:
+#   This VirtualService enables advanced traffic routing for canary releases
+#   using Argo Rollouts. It provides two routing strategies:
+#   1. Header-based routing for canary users
+#   2. Weight-based traffic splitting for gradual rollouts
+#
+# Traffic Flow:
+#   - Requests with "x-canary-user: true" header → 100% to canary service
+#   - All other requests → split between stable/canary based on weights
+#   - Argo Rollouts automatically adjusts weights during deployment
+#
+# Usage:
+#   - Apply this configuration after creating the required services and gateway
+#   - Set "x-canary-user: true" header for canary user testing
+#   - Argo Rollouts will manage traffic shifting automatically
+#
+# DNS Configuration:
+#   - Uses nip.io wildcard DNS service for local development
+#   - demo-app.127.0.0.1.nip.io resolves to 127.0.0.1 (localhost)
+#
+# =============================================================================
+---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
