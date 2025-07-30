@@ -1,0 +1,85 @@
+# ==================================================================================
+# ARGO ROLLOUTS DEMO BLUE-GREEN DEPLOYMENT
+# ==================================================================================
+#
+# This rollout implements a DEMO blue-green strategy for learning and testing:
+#
+# DEPLOYMENT STRATEGY:
+# - MANUAL PROMOTION: Requires manual approval to switch traffic
+# - HEADER-BASED TESTING: Test preview version with x-preview-version: true header
+# - ISTIO INTEGRATION: Uses VirtualService for traffic splitting
+# - NO ANALYSIS: Focuses on blue-green mechanics without analysis complexity
+#
+# DEPLOYMENT FLOW:
+# Active (100%) → Deploy Preview → Test Preview (header-based) → Manual Promote → Preview becomes Active (100%)
+#
+# USE CASE: Learning blue-green mechanics, safe production deployments
+# ==================================================================================
+
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: demo-app
+spec:
+  replicas: 5
+  strategy:
+    blueGreen:
+      # Reference to a Service which the controller updates to point to the active ReplicaSet
+      activeService: demo-app-service-active
+      # Reference to a Service which the controller updates to point to the preview ReplicaSet  
+      previewService: demo-app-service-preview
+      
+      # ============================================================================
+      # BLUE-GREEN SPECIFIC CONFIGURATION  
+      # ============================================================================
+      # Manual promotion ensures safety - no automatic traffic switching
+      # Preview version deployed alongside active for testing
+      # Traffic switches instantly on promotion (no gradual rollout)
+      # ============================================================================
+      autoPromotionEnabled: false        # MANUAL promotion required
+      scaleDownDelaySeconds: 30          # Keep old version for 30s after promotion
+
+  selector:
+    matchLabels:
+      app: demo-app
+  template:
+    metadata:
+      labels:
+        app: demo-app
+    spec:
+      containers:
+      - name: demo-app
+        image: nginx:1.20                # Base image - update this to trigger rollout
+        ports:
+        - containerPort: 80
+        env:
+        - name: VERSION
+          value: "v1.0"                  # Update this to see version changes
+        command: ["/bin/sh", "-c"]
+        args: 
+          - echo "<html><body><h1>Demo App - Version $(VERSION)</h1></body></html>" > /usr/share/nginx/html/index.html && exec nginx -g 'daemon off;'
+        # --------------------------------------------------------------------------
+        # HEALTH CHECKS: Essential for Istio sidecar injection and traffic routing
+        # --------------------------------------------------------------------------
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 10        # Wait 10s after container start
+          periodSeconds: 10              # Check every 10 seconds
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 5         # Ready check after 5s
+          periodSeconds: 5               # Check every 5 seconds
+        # --------------------------------------------------------------------------
+        # RESOURCE LIMITS: Production-ready resource management
+        # --------------------------------------------------------------------------
+        resources:
+          requests:
+            memory: "64Mi"               # Minimum memory reservation
+            cpu: "50m"                   # Minimum CPU reservation (0.05 cores)
+          limits:
+            memory: "128Mi"              # Maximum memory allowed
+            cpu: "100m"                  # Maximum CPU allowed (0.1 cores)

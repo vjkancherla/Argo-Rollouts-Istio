@@ -7,8 +7,6 @@ Analysis can be run in the background -- while the canary is progressing through
 
 The following example gradually increments the canary weight by 25% every 2 minutes until it reaches 100%.
 
-In the background, an AnalysisRun is started based on the AnalysisTemplates - "random-fail" and "always-pass"
-
 The rollout will not progress to the following step until the AnalysisRun is complete. A failure/error of the analysis will cause the rollout's update to abort, and set the canary weight to zero.
 
 ## Prerequisites Installation
@@ -21,7 +19,7 @@ See [argo_rollouts_istio_guide.md](argo_rollouts_istio_guide.md) for installing 
 - Argo Rollouts
 - Argo Rollouts Plugin
 
-- Prometheus - [run-prometheus.txt](Observalbility/Prometheus/run-prometheus.txt)
+- Prometheus - [run-prometheus.txt](../../observability/Prometheus/run-prometheus.txt)
 ---
 
 ## Core Application Configuration
@@ -44,21 +42,21 @@ k label namespace my-demo istio-injection=enabled
 
 ```bash
 # services.yaml
-k apply -n my-demo -f analysis_prometheus_example/services.yaml
+k apply -n my-demo -f ../../examples/canary/with-prometheus-analysis/services.yaml
 ```
 
 ### Istio Gateway
 
 ```bash
 # gateway.yaml
-k apply -n my-demo -f analysis_prometheus_example/gateway.yaml
+k apply -n my-demo -f ../../examples/canary/with-prometheus-analysis/gateway.yaml
 ```
 
 ### Istio VirtualService with Header Routing for Canary Testing
 
 ```bash
 # virtualsvc.yaml
-k apply -n my-demo -f analysis_prometheus_example/virtualsvc.yaml
+k apply -n my-demo -f ../../examples/canary/with-prometheus-analysis/virtualsvc.yaml
 ```
 
 ### Analysis Templates for Automated Safety
@@ -78,14 +76,14 @@ k apply -n my-demo -f analysis_prometheus_example/virtualsvc.yaml
 # - comprehensive-error-rate: Complete error monitoring (4xx + 5xx)
 # - client-error-rate: Client error monitoring (4xx only)
 
-k apply -n my-demo -f analysis_prometheus_example/analysis-templates.yaml
+k apply -n my-demo -f ../../examples/canary/with-prometheus-analysis/analysis-templates.yaml
 ```
 
 ### Application Rollout
 
 ```bash
 # rollout.yaml
-k apply -n my-demo -f analysis_prometheus_example/rollout.yaml
+k apply -n my-demo -f ../../examples/canary/with-prometheus-analysis/rollout.yaml
 ```
 
 ### Verify external access to the Application, via the Istio-Ingress-Gateway
@@ -143,7 +141,7 @@ NAME                                  KIND        STATUS     AGE    INFO
 ### Update the App version
 
 ```bash
-k apply -n my-demo -f example/rollout-update.yaml
+k apply -n my-demo -f ../../examples/canary/basic/rollout-update.yaml
 ```
 
 
@@ -156,12 +154,12 @@ while true; do
         kubectl argo rollouts -n my-demo get rollout demo-app
         echo "---"
         date
-    } >> rollout.log
+    } >> ../../logs/rollout.log
     sleep 10
 done
 
-# Tail the rollout log
-tail -f rollout.log
+# Tail the ../../logs/rollout.log
+tail -f ../../logs/rollout.log
 
 # Round-robin to all pods. Based on the current Traffic weights, ISTIO will send requests to the stable/canary service correspondingly
 while true; do curl http://demo-app.127.0.0.1.nip.io:8080 ; sleep 5; done

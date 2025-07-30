@@ -1,0 +1,28 @@
+# VirtualService - Header-based routing for testing Preview version
+# Routes between active (production) and preview (test) services
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: demo-app-vsvc
+spec:
+  gateways:
+  - demo-app-gateway
+  hosts:
+  - "demo-app.127.0.0.1.nip.io"    # nip.io for local development
+  http:
+  # Route 1: Preview testing (Blue-Green test traffic)
+  - name: preview-users
+    match:
+    - headers:
+        x-preview-version:
+          exact: "true"
+    route:
+    - destination:
+        host: demo-app-service-preview
+      weight: 100
+  # Route 2: Production traffic (goes to active service)
+  - name: primary
+    route:
+    - destination:
+        host: demo-app-service-active
+      weight: 100

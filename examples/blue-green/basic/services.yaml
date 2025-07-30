@@ -1,0 +1,30 @@
+# Active Service (Production Traffic - Current Active Version)
+apiVersion: v1
+kind: Service
+metadata:
+  name: demo-app-service-active
+spec:
+  selector:
+    app: demo-app
+    # Argo Rollouts manages this selector to point to active version
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+  type: ClusterIP
+
+---
+# Preview Service (Test Traffic - New Preview Version)
+apiVersion: v1
+kind: Service
+metadata:
+  name: demo-app-service-preview
+spec:
+  selector:
+    app: demo-app
+    # Argo Rollouts manages this selector to point to preview version
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+  type: ClusterIP

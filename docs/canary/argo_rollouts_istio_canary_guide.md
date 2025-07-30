@@ -214,7 +214,7 @@ k label namespace my-demo istio-injection=enabled
 ### Deploy the Rollout resource
 
 ```bash
-k apply -n my-demo -f example/rollout.yaml
+k apply -n my-demo -f ../../examples/canary/basic/rollout.yaml
 ```
 
 **Note:** The Rollout resource (and the Pods) will not be created until all the below objects are created.
@@ -237,19 +237,19 @@ steps:
 ### Deploy stable and canary services
 
 ```bash
-k apply -n my-demo -f example/services.yaml
+k apply -n my-demo -f ../../examples/canary/basic/services.yaml
 ```
 
 ### Deploy Istio Gateway
 
 ```bash
-k apply -n my-demo -f example/gateway.yaml
+k apply -n my-demo -f ../../examples/canary/basic/gateway.yaml
 ```
 
 ### Deploy Istio VirtualService
 
 ```bash
-k apply -n my-demo -f example/virtualsvc.yaml
+k apply -n my-demo -f ../../examples/canary/basic/virtualsvc.yaml
 ```
 
 ### Verify Application Pods
@@ -311,7 +311,7 @@ NAME                                      KIND        STATUS     AGE    INFO
 ### Update the App version
 
 ```bash
-k apply -n my-demo -f example/rollout-update.yaml
+k apply -n my-demo -f ../../examples/canary/basic/rollout-update.yaml
 ```
 
 ### Check the state of the Canary Rollout
